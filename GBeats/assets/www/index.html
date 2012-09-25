@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<title>GBeats</title>
+<link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css" type="text/css" charset="utf-8"/>
+<link rel="stylesheet" href="css/my.css" type="text/css"   charset="utf-8"/>
+<link rel="stylesheet" href="css/styles.css" />
+<script src="js/cordova-1.7.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/jquery.mobile-1.1.1.min.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script src="js/commons.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/jquery.slideshow.min.js"></script>
+<script src="js/jquery-hashchange.js"></script>
+<script src="childbrowser.js"></script>
+
+<script>
+/**
+ * Use for tracking page changes
+ */
+ $(window).hashchange( function(){
+ 	 var hash = location.hash;
+ 		
+     if(hash == ""){
+     	navigator.app.exitApp();
+     }
+     else {//this part records  page changes to Google analytics
+     	trackPageView(location.pathname +location.search +location.hash);
+     }
+ });
+</script>
+		
+
+
+
+</head>
+<body onload="init();">
+<!--  Terms and Agreement Page /Legalese -->
+<div data-role="page" id="legalese" class="thebody" >
+            <div data-role="header" class="all-header" data-position="fixed">
+              <div class="btn-back"><!--<a data-rel="back">&nbsp;</a>--></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+        </div><!-- /header -->
+        <div data-role="content" >
+            <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>	
+
+			<table class="legals">
+				<tbody>
+					<tr>
+					<td colspan="2" class="left"><h4>This application is made exclusively for Globe Telecom and TM subscribers. The use of this application may be subject to standard internet browsing charges, unless registered to a surfing promo. Mobile internet is necessary for the use of this application. Certain functionalities of the application may require your mobile number to send and receive SMS to enable promo participation, awarding of prizes and download of exclusive mobile content. Standard charges apply.</h4></td>
+					</tr>
+					<tr>
+					<td class="legals"><a id = "yes" data-role="button" data-direction="reverse">
+            			I Agree
+        			</a></td>
+					<td class="legals"><a id="no" data-role="button"  data-direction="reverse">
+            			No Thanks
+        			</a></td>
+					</tr>
+				</tbody>
+			</table>
+    </div>
+</div>
+
+<!--  Verification Page  -->
+ <div data-role="page" id="verifypage" class="thebody">
+        <div data-role="header" class="all-header" data-position="fixed">
+              <div class="btn-back"><!--<a data-rel="back">&nbsp;</a>--></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+        </div><!-- /header -->
+        <div data-role="content" class="verify">
+            <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>	
+
+             <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup" >
+                        <label for="txtCode">
+                            Please enter the verification sent to your mobile number.
+                        </label>
+                        <input name="txtVerify" id="txtCode" placeholder="Enter Verification Code" type="text" />
+                    </fieldset>
+                </div>
+                <div class="legals">
+	                <a data-role="button" id="btnVerify" >Verify</a>
+	                <a data-role="button" id="btnResend" >Resend Verification Code</a>
+            	</div>
+            </div>
+        </div>
+
+<!-- Mobtel Page -->
+<div data-role="page" id="mobtel" class="thebody">
+    <div data-role="header" class="all-header" data-position="fixed">
+              <div class="btn-back"><!--<a data-rel="back">&nbsp;</a>--></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+      </div><!-- /header -->
+     <div data-role="content">
+      <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>	
+            <div class="title-page-container">
+                    <div class="title-page-text"><h1>Enter your mobile number now</h1></div>
+                </div><!-- /title-page-container -->
+     	<table>
+				<tbody>
+					<tr>
+						<td >
+							<select id="prefix">
+								<option value="0905">0905</option>
+								<option value="0906">0906</option>
+								<option value="0915">0915</option>
+								<option value="0916">0916</option>
+								<option selected value="0917">0917</option>
+								<option value="0926">0926</option>
+								<option value="0927">0927</option>
+								<option value="0935">0935</option>
+							</select>
+						</td>
+						<td>
+							<input  id="mobtelnum" type="number" required="required" placeholder="Enter your mobile number" maxlength="7" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" class="legals"><button id="login" >Submit</button></td>
+					</tr>
+
+				</tbody>
+			</table>
+     </div>	
+</div><!-- Start of home page -->
+	<!-- Start of home page ------------------------------------------------------------------------------------------------------------------>
+        <div data-role="page" class="thebody" id="home">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="artist-tiles">
+                	<div class="upper-section">
+                		
+                			<input type="search" name="searchfield" placeholder="I'm looking for music..." id="searchfield" onchange="searchMusicEvent();" value="" data-mini="true" />
+                    	<div class="tiles-row-1">
+                        	<div class="featured-label">
+                            	<img src="images/features-artist-title.png">
+                            </div><!-- /featured-label -->
+                            <div class="featured-artist-image" id="featured-artist-list">
+                                <a href="#features" data-transition="pop">
+                                    <ul class="slide-featured" id="slide-featured">
+                                      <!--  <li><img src="albums/10.jpg"></li>
+                                        <li><img src="albums/5.jpg"></li>
+                                        <li><img src="albums/4.jpg"></li>
+                                       -->
+                                    </ul>
+                                </a>
+                            </div><!-- /featured-artist-image -->
+                            <div style="clear:both"></div>
+                        </div><!-- /tiles-row-1 -->
+                        <div class="clearfix"></div>
+                        
+                        <div class="tiles-row-2" >
+                        <h2>Free Downloads</h2>
+                            <div class="gens">
+                            	<a href="#genres" data-transition="pop">
+                                    <img src="images/genres-tile.png">
+                                    <div class="smaller-details"><h5>Genres</h5></div>
+                                </a>
+                            </div><!-- /gens -->
+                            
+                            <div class="new-artists" id="new-artist-list">
+                            	<a href="#pops" data-transition="pop">
+                                    <ul class="slide-new" id="slide-new">
+                                       <li><img src="albums/default.jpg"></li>
+                                       <li><img src="genre/coming-soon.png"></li>
+                                    </ul>
+                                    <div class="details-bg"><h5>New Artists</h5></div>
+                                 </a>
+                            </div><!-- /new-artists -->
+                        <div class="clearfix"></div>
+                        </div>
+                        <div class="tiles-row-3">
+                            <div class="local-artist" id="local-artist-list">
+                                <a href="#opm" data-transition="pop">
+                                    <ul class="slide-local" id="slide-local">
+                                        <li><img src="albums/default.jpg"></li>
+                                       <li><img src="genre/coming-soon.png"></li>
+                                    </ul>
+                                	<div class="details-bg"><h5>Local Artists</h5></div>
+                                </a>
+                            </div><!-- /local-artist -->
+                            <div class="decs">
+                            	<a href="#decades" data-transition="pop">
+                                    <img src="images/decades-tile.png">
+                                    <div class="smaller-details"><h5>Decades</h5></div>
+                                </a>
+                            </div><!-- /decs -->
+                            <div class="clearfix"></div>
+                        </div><!-- /tiles-row-2 -->
+                        
+                    	<div class="tiles-row-1">
+                        	<div class="top-hits-label">
+                            	<img src="images/top-hits-label.png">
+                            </div><!-- /featured-label -->
+                            <div class="top-hits-image" id="top-hits-list">
+                                <a href="#tops" data-transition="pop">
+                                    <ul class="slide-featured" id="slide-top-hits">
+                                        <li><img src="albums/default.jpg"></li>
+                                       <li><img src="genre/coming-soon.png"></li>
+                                    </ul>
+                                </a>
+                            </div><!-- /featured-artist-image -->
+                            <div style="clear:both"></div>
+                        </div><!-- /tiles-row-1 -->
+                        
+                	</div><!-- /upper-section -->
+                    
+                    <div class="lower-section">
+                        <div class="tiles-row-3">
+                            <div class="more-subs">
+                            	<a href="#le-modal1" data-rel="dialog">
+                                  <img src="genre/coming-soon.png">
+                                    <div class="smaller-details"><h5>Subscribe</h5></div>
+                                </a>
+                            </div><!-- /more-subs -->
+                            <div class="more-subs">
+                            	<a href="#le-modal1" data-rel="dialog">
+                                  <img src="genre/coming-soon.png">
+                                    <div class="smaller-details"><h5>Subscribe</h5></div>
+                                </a>
+                            </div><!-- /more-subs -->
+                            <div class="more-subs">
+                            	<a href="#le-modal1" data-rel="dialog">
+                                  <img src="genre/coming-soon.png">
+                                    <div class="smaller-details"><h5>Subscribe</h5></div>
+                                </a>
+                            </div><!-- /more-subs -->
+                            <div class="clearfix"></div>
+                        </div><!-- /tiles-row-3 -->
+                        
+                        <div class="tiles-row-3">
+                            <div class="promo-link">
+                            	 <a href="#promos" data-transition="pop">
+                                    <img src="images/promo-tile.png">
+                                    <div class="smaller-details"><h5>Promos</h5></div>
+                                </a>
+                            </div><!-- /promo-link -->
+                            
+                            <div class="more-hits">
+                            	<a href="#more1" data-transition="pop">
+                                    <ul class="slide-more">
+                                    	<li><img src="albums/default.jpg"></li>
+                                        <li><img src="genre/coming-soon.png"></li>
+                                    </ul>
+                                	<div class="details-bg"><h5>More Hits</h5></div>
+                                </a>
+                            </div><!--  /more-hits -->
+                            <div class="clearfix"></div>
+                        </div><!-- /tiles-row-3 -->
+                    </div><!-- /lower-section -->
+                </div><!-- /artist-tiles -->
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+        </div><!-- /HOME -->
+        
+        <!-- Start of featured artists page ---------------------------------------------------------------------------------------------------------->
+        <div data-role="page" class="thebody" id="features">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"><a data-rel="back">&nbsp;</a></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"><a href="#le-menu" data-rel="dialog">&nbsp;</a></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content" id="featartistlistitem">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="title-page-container">
+                    <div class="title-page-text"><h1>Featured Artists</h1></div>
+                </div><!-- /title-page-container -->
+            	<!-- 
+            	<div class="featured-artists">
+                	<a href="http://globebbcurve.com/katyperry" data-rel="external"><img src="albums/featured/katy-banner.png"></a>
+                </div>
+            	<div class="featured-artists">
+                	<a href="http://globebbcurve.com/madonna" data-rel="external"><img src="albums/featured/mdna-banner.png"></a>
+                </div>
+            	<div class="featured-artists">
+                	<a href="http://globebbcurve.com/coldplay" data-rel="external"><img src="albums/featured/coldplay-banner.png"></a>
+                </div>
+                -->
+                
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+         </div><!-- /features -->
+         
+         
+         <!-- Start of more-hits page --------------------------------------------------------------------------------------------------------------------->
+        <div data-role="page" class="thebody" id="more">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"><a data-rel="back">&nbsp;</a></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"><a href="#le-menu" data-rel="dialog">&nbsp;</a></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="title-page-container">
+                    <div class="title-page-text"><h1>More Hits</h1></div>
+                </div><!-- /title-page-container -->
+            	<div class="upper-section">
+                	<div class="ranks" id="more_hits_list">
+        
+                    </div><!-- /ranks -->
+                </div><!-- /upper-section -->
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+         </div><!-- /more -->
+         
+         
+         <!-- Start of promos page ---------------------------------------------------------------------------------------------------------------------->
+        <div data-role="page" class="thebody" id="promos">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"><a data-rel="back">&nbsp;</a></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"><a href="#le-menu" data-rel="dialog">&nbsp;</a></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="title-page-container">
+                    <div class="title-page-text"><h1>Promos</h1></div>
+                </div><!-- /title-page-container -->
+            	<div class="upper-section">
+            		<h3>Win It Sa Lucky Minute: Load at Gadget Panalo</h3>
+					<p>Gusto mo bang MANALO NG LOAD? O kaya ng IPHONE4S?</p>
+                    <p>Globe and Touch Mobile subscribers who download or subscribe to services and/or pull 
+                    	content available on access numbers 2346, 2802, Dloadstation* and Disney WAP* may join 
+                    	the Win It Sa Lucky Minute!:</p>
+                    <p>To earn more entries, subscribers may download Alert Tones by texting 
+                    	the featured keyword. If they are the first texter on the lucky minute they would win Load. 
+                    	Regardless if they are the first or not, 
+                    	each downloads earns them a raffle entry for the grand draw.</p>
+                    	
+                    <p>Start earning raffle entries, text LIBRE to 2346 for FREE 5days MP3! or u may visit 
+                    	<a href="http://dloadstation.com">http://dloadstation.com</a> browsing is free!</p>
+                </div><!-- /upper-section -->
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+         </div><!-- /promos -->
+         
+         
+         <!-- Start of genres page ---------------------------------------------------------------------------------------------------------------------->
+        <div data-role="page" class="thebody" id="genres">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"><a data-rel="back">&nbsp;</a></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"><a href="#le-menu" data-rel="dialog">&nbsp;</a></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="title-page-container">
+                    <div class="title-page-text"><h1>Genres</h1></div>
+                </div><!-- /title-page-container -->
+            	<div class="upper-section">
+                	<ul class="link-list" data-role="listview">
+                    	<li><a href="#pops" data-transition="pop"><img src="genre/pop-label.png"/>Pop</a></li>
+                    	<li><a href="#loves" data-transition="pop"><img src="genre/love-art.png"/>Love</a></li>
+                    	<li><a href="#opm" data-transition="pop"><img src="genre/opm-art.png"/>OPM</a></li>
+                    	<li><a href="#alt-rock" data-transition="pop"><img src="genre/altrock-art.png"/>Alternative Rock</a></li>
+                    </ul>
+                </div><!-- /upper-section -->
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+         </div><!-- /genres -->
+         
+         
+         <!-- Start of decades page -------------------------------------------------------------------------------------------------------------------->
+        <div data-role="page" class="thebody" id="decades">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"><a data-rel="back">&nbsp;</a></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"><a href="#le-menu" data-rel="dialog">&nbsp;</a></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="title-page-container">
+                    <div class="title-page-text"><h1>Decades</h1></div>
+                </div><!-- /title-page-container -->
+            	<div class="upper-section">
+                	<ul class="link-list" data-role="listview">
+                    	
+                    	<!-- <li><a href="#d60" data-transition="pop">1960s</a></li> -->
+                    	<li><a href="#d70" data-transition="pop" >1970s</a></li>
+                    	<li><a href="#d80" data-transition="pop">1980s</a></li>
+                    	
+                    	<li><a href="#d90" data-transition="pop">1990s</a></li>
+                    	<li><a href="#genres" data-transition="pop">2000s</a></li>
+                    </ul>
+                </div><!-- /upper-section -->
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+         </div><!-- /decades -->
+
+         
+<!-- ====================================== THE GENRE PAGES GO HERE =================================================================================== -->
+     <!-- Start of local artists/opm page ------------------------------------------------------------------------------------------------------------->
+        <div data-role="page" class="thebody" id="opm">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"><a data-rel="back">&nbsp;</a></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"><a href="#le-menu" data-rel="dialog">&nbsp;</a></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="title-page-container">
+                    <div class="title-page-text"><h1>OPM</h1></div>
+                </div><!-- /title-page-container -->
+            	<div class="upper-section">
+                	<div class="ranks" id="opm_list">
+                    	
+                    </div><!-- /ranks -->
+                    
+                    
+                    
+                    
+                    <div class="the-hits"  data-role="collapsible" data-collapsed-icon="arrow-r">
+                       <h3>More Hits</h3>
+                       
+                    </div>
+                </div><!-- /upper-section -->
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+         </div><!-- /opm -->
+         
+         <!-- Start of new artists/pop page ------------------------------------------------------------------------------------------------------------->
+        <div data-role="page" class="thebody" id="pops">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"><a data-rel="back">&nbsp;</a></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"><a href="#le-menu" data-rel="dialog">&nbsp;</a></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="title-page-container">
+                    <div class="title-page-text"><h1>Pop</h1></div>
+                </div><!-- /title-page-container -->
+            	<div class="upper-section">
+                	<div class="ranks" id="pop_list">
+                 
+                 
+                    </div><!-- /ranks -->
+                    <div class="the-hits" data-role="collapsible" data-collapsed-icon="arrow-r">
+                       <h3>More Hits</h3>
+                      
+                    </div>
+                </div><!-- /upper-section -->
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+         </div><!-- /pops -->
+         
+         <!-- Start of love page ------------------------------------------------------------------------------------------------------------->
+        <div data-role="page" class="thebody" id="loves">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"><a data-rel="back">&nbsp;</a></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"><a href="#le-menu" data-rel="dialog">&nbsp;</a></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="title-page-container">
+                    <div class="title-page-text"><h1>Love</h1></div>
+                </div><!-- /title-page-container -->
+            	<div class="upper-section">
+                	<div class="ranks" id="loves_list">
+                    	
+                    </div><!-- /ranks -->
+                    <div class="the-hits" data-role="collapsible" data-collapsed-icon="arrow-r">
+                       <h3>More Hits</h3>
+                       
+                    </div>
+                </div><!-- /upper-section -->
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+         </div><!-- /loves -->
+         
+         <!-- Start of alt-rock page ------------------------------------------------------------------------------------------------------------->
+        <div data-role="page" class="thebody" id="alt-rock">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"><a data-rel="back">&nbsp;</a></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"><a href="#le-menu" data-rel="dialog">&nbsp;</a></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="title-page-container">
+                    <div class="title-page-text"><h1>Alternative Rock</h1></div>
+                </div><!-- /title-page-container -->
+            	<div class="upper-section">
+                	<div class="ranks" id="alt-rock_list">
+                    	
+                    </div><!-- /ranks -->
+                    <div class="the-hits" data-role="collapsible" data-collapsed-icon="arrow-r">
+                       <h3>More Hits</h3>
+                     
+                    </div>
+                </div><!-- /upper-section -->
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+         </div><!-- /alt-rock -->
+         
+    <!-- Start of top-hits page ------------------------------------------------------------------------------------------------------------->
+        <div data-role="page" class="thebody" id="tops">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"><a data-rel="back">&nbsp;</a></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"><a href="#le-menu" data-rel="dialog">&nbsp;</a></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="title-page-container">
+                    <div class="title-page-text"><h1>Top Hits</h1></div>
+                </div><!-- /title-page-container -->
+            	<div class="upper-section">
+                	<div class="ranks" id="tops_list">
+                    	
+                    </div><!-- /ranks -->
+                    
+                    
+                    
+                    
+                    <div class="the-hits"  data-role="collapsible" data-collapsed-icon="arrow-r">
+                       <h3>More Hits</h3>
+                       
+                    </div>
+                </div><!-- /upper-section -->
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+         </div><!-- /top-hits -->
+         
+    <!-- Start of search result page ------------------------------------------------------------------------------------------------------------->
+        <div data-role="page" class="thebody" id="searchresult">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"><a data-rel="back">&nbsp;</a></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"><a href="#le-menu" data-rel="dialog">&nbsp;</a></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="title-page-container">
+                    <div class="title-page-text"><h1 id="searchresult_header">Search Result</h1></div>
+                </div><!-- /title-page-container -->
+            	<div class="upper-section">
+                	<div class="ranks" id="searchresult_list">
+                    	
+                    </div><!-- /ranks -->
+                     <div class="the-hits" data-role="collapsible" data-collapsed-icon="arrow-r">
+                       <h3>More Hits</h3>
+                    
+                    </div>
+                    
+                 
+                </div><!-- /upper-section -->
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+         </div><!-- /search result list -->     
+         
+         
+<!-- ====================================== THE DECADE PAGES GO HERE =================================================================================== -->
+         <!-- Start of 1960s page ------------------------------------------------------------------------------------------------------------->
+        <div data-role="page" class="thebody" id="d60">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"><a data-rel="back">&nbsp;</a></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"><a href="#le-menu" data-rel="dialog">&nbsp;</a></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="title-page-container">
+                    <div class="title-page-text"><h1>1960s</h1></div>
+                </div><!-- /title-page-container -->
+            	<div class="upper-section">
+                	<div class="ranks" id="d60_list">
+
+                    </div><!-- /ranks -->
+                    <div class="the-hits" data-role="collapsible" data-collapsed-icon="arrow-r">
+                       <h3>More Hits</h3>
+                    
+                    </div>
+                </div><!-- /upper-section -->
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+         </div><!-- /d60 -->
+         
+         
+         <!-- Start of 1970s page ------------------------------------------------------------------------------------------------------------->
+        <div data-role="page" class="thebody" id="d70">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"><a data-rel="back">&nbsp;</a></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"><a href="#le-menu" data-rel="dialog">&nbsp;</a></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="title-page-container">
+                    <div class="title-page-text"><h1>1970s</h1></div>
+                </div><!-- /title-page-container -->
+            	<div class="upper-section">
+                	<div class="ranks" id="d70_list">
+                  
+                    </div><!-- /ranks -->
+                    <div class="the-hits" data-role="collapsible" data-collapsed-icon="arrow-r">
+                       <h3>More Hits</h3>
+                     
+                    </div>
+                </div><!-- /upper-section -->
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+         </div><!-- /d70 -->
+         
+         <!-- Start of 1980s page ------------------------------------------------------------------------------------------------------------->
+        <div data-role="page" class="thebody" id="d80">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"><a data-rel="back">&nbsp;</a></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"><a href="#le-menu" data-rel="dialog">&nbsp;</a></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="title-page-container">
+                    <div class="title-page-text"><h1>1980s</h1></div>
+                </div><!-- /title-page-container -->
+            	<div class="upper-section">
+                	<div class="ranks" id="d80_list">
+                    	
+                    </div><!-- /ranks -->
+                    <div class="the-hits" data-role="collapsible" data-collapsed-icon="arrow-r">
+                       <h3>More Hits</h3>
+                    
+                    </div>
+                </div><!-- /upper-section -->
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+         </div><!-- /d80 -->
+         
+         <!-- Start of 1990s page ------------------------------------------------------------------------------------------------------------->
+        <div data-role="page" class="thebody" id="d90">
+            <div data-role="header" class="all-header" data-position="fixed">
+                <div class="btn-back"><a data-rel="back">&nbsp;</a></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"><a href="#le-menu" data-rel="dialog">&nbsp;</a></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+            </div><!-- /header -->
+            <div data-role="content">
+                <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>
+                <div class="title-page-container">
+                    <div class="title-page-text"><h1>1990s</h1></div>
+                </div><!-- /title-page-container -->
+            	<div class="upper-section">
+                	<div class="ranks" id="d90_list">
+
+                    </div><!-- /ranks -->
+                    <div class="the-hits" data-role="collapsible" data-collapsed-icon="arrow-r">
+                       <h3>More Hits</h3>
+                   
+                    </div>
+                </div><!-- /upper-section -->
+            </div><!-- /content -->
+          	<div data-role="footer" class="the-footer" data-position="fixed"> 
+                <img src="images/footer-banner.png">
+            </div><!-- /footer -->
+         </div><!-- /d90 -->
+
+
+
+
+
+        
+<!-- ============================================================== THE MENU =========================================================================== -->        
+<div id="le-menu" data-role="dialog">
+    <div data-role="header" class="lemodal-header"><h1>Menu</h1></div>
+    <div data-role="content" class="lemenu-modal">
+        <ul id="menu-list">
+            <li><a href="#home" data-transition="pop">Home</a></li>
+            <li><a href="#features" data-transition="pop">Featured Artists</a></li>
+            <li><a href="#opm" data-transition="pop">Local Artists</a></li>
+            <li><a href="#pops" data-transition="pop">New Artists</a></li>
+          	<li><a href="#tops" data-transition="pop">Top Hits</a></li>
+            <li><a href="#promos" data-transition="pop">Promos</a></li>
+            <li><a href="#genres" data-transition="pop">Genres</a></li>
+            <li><a href="#decades" data-transition="pop">Decades</a></li>
+        </ul>
+    </div>        
+</div>
+     
+<!-- MODAL -->
+<div id="le-modal" data-role="dialog" data-rel="back">
+    <div data-role="header" class="lemodal-header">&nbsp;</div>
+    <div data-role="content"  class="lemodal">
+        <h5>Enjoy this <span id="songTitle">song</span> by  <span id="artistName">artistname</span>  <span id="theType">music</span>
+        	
+        </h5>
+        <a id="goLink" class="goLink" data-role="button" href="">GET IT NOW</a>
+      <h6 style="font-style:italic">&nbsp;</br></br></h6>
+    </div>
+</div>
+
+<!-- MODAL -->
+<div id="songinfodialog" data-role="dialog" data-rel="back">
+    <div data-role="header" class="lemodal-header">&nbsp;</div>
+    <div data-role="content"  class="songinfo_modal">
+    	<div class="song-details">
+	       <div class="album-art"><img id="albumart" src='albums/default.jpg'></div>
+	       <div class="the-song">
+	       	 <h5 id="songTitle">song name</h5>
+	       	 <h6 id="artistName">artist</h6>
+	       </div>
+		</div>
+		<div class="description">
+	       	<h3>Song Information</h3>
+	       	<h5 id="songinfo">Details</h5>
+		</div>
+	</div>  	  
+</div>
+
+
+
+<!-- MODAL -->
+<div id="le-modal2" data-role="dialog"  data-rel="back">
+    <div data-role="header" class="lemodal-header">&nbsp;</div>
+    <div data-role="content" class="lemodal">
+        <h5>You have just downloaded <span id="artistName1">artist</span>'s  <span id="songTitle1">song</span> fulltrack!</h5>
+        <a id="leFeatured" data-role="button" href="">GET IT NOW</a>
+         <h6 style="font-style:italic">&nbsp;</br></br></h6>
+    </div>
+</div>
+ 
+ 			
+<!-- MODAL -->
+<div id="le-modal3" data-role="dialog">
+    <div data-role="header" class="lemodal-header">&nbsp;</div>
+    <div data-role="content" class="lemodal">
+        <h5>You have just downloaded <span id="songTitle2"></span> by  <span id="artistName2"></span> <span id="songType2"></span></br> Your download will delivered shortly.</h5>
+        <a id="leFeatured" data-role="button" data-rel="back" >OK</a>
+         <h6 style="font-style:italic">&nbsp;</br></br></h6>
+    </div>
+</div> 
+ 
+        
+      
+      <!-- No Connection Page -->
+<div data-role="page" id="no-connection" class="thebody" data-rel="back">
+    <div data-role="header" class="all-header" data-position="fixed">
+              <div class="btn-back"><!--<a data-rel="back">&nbsp;</a>--></div>
+                <div class="header-container"><img src="images/Globe-3D-Positive.png"></div>
+                <div class="btn-ddmenu"></div><!-- btn-ddmenu -->
+            	<div class="clearfix"></div>
+      </div><!-- /header -->
+     <div data-role="content" >
+      <div class="gbeats-banner"><img src="images/gbeats-banner.png"></div>	
+            <div style=" text-align:center">
+             <img style="width: 50%; height:auto" src="images/no-wifi.gif">
+             <h4>Network Connection Problem</br>
+             Try Connecting to WIFI/3G and restart the application</h4>
+           </div>
+     </div>	
+</div>
+      
+        
+        
+        
+        
+
+        <script>
+        	$('.slide-local').slideshow({ timeout: 2000 });
+			$('.slide-featured').slideshow({ timeout: 5000, speed: 300 });
+			$('.slide-new').slideshow({ timeout: 1000, speed: 300 });
+			$('.slide-more').slideshow({ timeout: 4000 });
+	
+		
+        </script>
+
+</body>
+</html>
